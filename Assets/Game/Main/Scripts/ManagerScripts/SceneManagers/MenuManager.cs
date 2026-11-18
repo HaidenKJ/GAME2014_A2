@@ -4,74 +4,55 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    [Header("Build Settings indexes")]
+    [Header("Build Settings indexes")] // Scenes
     [SerializeField] private int playSceneIndex = 2;
     [SerializeField] private int instructionsSceneIndex = 1;
 
-    [Header("Play button animation")]
+    [Header("Play button animation")] // Play button animation, trigger for animation, and animation clip for length
     [SerializeField] private Animator playAnim;
     [SerializeField] private string playTrigger = "Play";
-    [SerializeField] private string playFinalState = "PlayTransition";
+    [SerializeField] private AnimationClip playClip;
 
-    [Header("How To Play button animation")]
+    [Header("How To Play button animation")] // same fields as Play button above, except for How To Play button
     [SerializeField] private Animator htpAnim;
     [SerializeField] private string htpTrigger = "HTP";
-    [SerializeField] private string htpFinalState = "HowToPlayTransition";
+    [SerializeField] private AnimationClip htpClip;
 
-    [Header("Failsafe")]
-    [SerializeField] private float timeoutSeconds = 5f;
-
-    private bool isTransitioning = false;
+    private bool isTransitioning = false; // prevents multiple button presses from triggering multiple scene loads
 
     public void OnPlayPressed()
     {
         if (isTransitioning) return;
         isTransitioning = true;
-        StartCoroutine(PlayAnimThenLoad(playAnim, playTrigger, playFinalState, playSceneIndex));
+
+        StartCoroutine(PlayThenLoad(playAnim, playTrigger, playClip, playSceneIndex));
     }
 
     public void OnHowToPlayPressed()
     {
         if (isTransitioning) return;
         isTransitioning = true;
-        StartCoroutine(PlayAnimThenLoad(htpAnim, htpTrigger, htpFinalState, instructionsSceneIndex));
+
+        StartCoroutine(PlayThenLoad(htpAnim, htpTrigger, htpClip, instructionsSceneIndex));
     }
 
-    private IEnumerator PlayAnimThenLoad(Animator anim, string trigger, string finalState, int sceneIndex)
+    private IEnumerator PlayThenLoad(Animator anim, string trigger, AnimationClip clip, int sceneIndex) // Coroutines still confuse me a bit
     {
-        if (anim == null)
+        if (anim != null)
         {
-            Debug.LogError("MenuManager: Animator reference not assigned. Loading scene directly.", this);
-            LoadByIndex(sceneIndex);
-            yield break;
-        }
+            anim.SetTrigger(trigger);
 
-        anim.SetTrigger(trigger);
-
-        // 1) Wait until the Animator enters the final state
-        float elapsed = 0f;
-        while (!anim.GetCurrentAnimatorStateInfo(0).IsName(finalState))
-        {
-            elapsed += Time.unscaledDeltaTime;
-            if (elapsed >= timeoutSeconds)
+            if (clip != null)
             {
-                Debug.LogWarning("Never reached state '" + finalState + "'. Loading anyway.", this);
-                LoadByIndex(sceneIndex);
-                yield break;
+                // Clip length is adjusted for the state's speed multiplier
+                yield return new WaitForSeconds(clip.length);
             }
-            yield return null;
-        }
-
-        // 2) Wait until the clip has played once
-        while (anim.GetCurrentAnimatorStateInfo(0).IsName(finalState) && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-        {
-            yield return null;
         }
 
         LoadByIndex(sceneIndex);
     }
 
-    private void LoadByIndex(int index)
+    private void LoadByIndex(int index) // Loading scene based off index in build settings
     {
         if (index < 0 || index >= SceneManager.sceneCountInBuildSettings)
         {
