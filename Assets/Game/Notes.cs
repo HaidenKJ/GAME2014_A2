@@ -9,7 +9,9 @@
 // • If you not join to this session you will lose that lab of 10% (2.5 points)
 
 // TODO General:
-// 1. Implement Safe Zones for UI
+// 1. Implement Safe Zones for UI (So they don't warp too much on different devices)
+// 2. Implement a basic pause menu (No functionality needed yet except for scene switching)
+// 3. Implement a scene transition for MenuScene PlayButton to GameScene
 
 
 // Other Notes:

@@ -14,3 +14,6 @@ public class InstructionManager : MonoBehaviour
         
     }
 }
+
+// Short delay before the player can interact with anything on screen (Delay ends when all initialization animation elements finish)
+// Continue button will initilize last, allowing the player to read the instructions before continuing by accident

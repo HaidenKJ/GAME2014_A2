@@ -805,7 +805,6 @@ GameObject:
   m_Component:
   - component: {fileID: 511770881}
   - component: {fileID: 511770882}
-  - component: {fileID: 511770883}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -848,33 +847,10 @@ MonoBehaviour:
   instructionsSceneIndex: 1
   playAnim: {fileID: 0}
   playTrigger: Play
-  playFinalState: PlayTransition
-  htpAnim: {fileID: 0}
+  playClip: {fileID: 0}
+  htpAnim: {fileID: 451061843}
   htpTrigger: HTP
-  htpFinalState: HowToPlayTransition
-  timeoutSeconds: 5
---- !u!95 &511770883
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511770880}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f54d6544a65b6554088bd3d00d4897d1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  htpClip: {fileID: 7400000, guid: 65cfc0993a5b055439fa08753f09cd63, type: 2}
 --- !u!1 &685152724
 GameObject:
   m_ObjectHideFlags: 0
