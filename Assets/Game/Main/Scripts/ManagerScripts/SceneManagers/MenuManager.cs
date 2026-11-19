@@ -36,7 +36,7 @@ public class MenuManager : MonoBehaviour
         StartCoroutine(PlayThenLoad(htpAnim, htpTrigger, htpClip, instructionsSceneIndex));
     }
 
-    private IEnumerator PlayThenLoad(Animator anim, string trigger, AnimationClip clip, int sceneIndex) // Coroutines still confuse me a bit
+    private IEnumerator PlayThenLoad(Animator anim, string trigger, AnimationClip clip, int sceneIndex)
     {
         if (anim != null)
         {
@@ -44,8 +44,7 @@ public class MenuManager : MonoBehaviour
 
             if (clip != null)
             {
-                // Clip length is adjusted for the state's speed multiplier
-                yield return new WaitForSeconds(clip.length);
+                yield return new WaitForSeconds(clip.length); // Clip length is adjusted for the state's speed multiplier
             }
         }
 
