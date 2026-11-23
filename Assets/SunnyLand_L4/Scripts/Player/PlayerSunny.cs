@@ -36,6 +36,43 @@ public class PlayerSunny : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Move();
+    }
+
+    private void Move()
+    {
+        if (joystick.Horizontal > JoystickHorizontalSensitivity)
+        {
+            // Moving Right
+            rb2d.AddForce(Vector2.right * HorizontalForce * Time.deltaTime);
+            sr.flipX = false;
+        }
+
+        else if (joystick.Horizontal < -JoystickHorizontalSensitivity)
+        {
+            // Moving Left
+            rb2d.AddForce(Vector2.left * HorizontalForce * Time.deltaTime);
+            sr.flipX = true;
+        }
+
+        if (joystick.Vertical > JoystickVerticalSensitivity && isGrounded)
+        {
+            // Jump
+            rb2d.AddForce(Vector2.up * VerticalForce * Time.deltaTime);
+            isJumping = true;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        isGrounded = true;
+        isJumping = false;
+    
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        isGrounded = false;
+
     }
 }
