@@ -46,6 +46,7 @@ public class PlayerSunny : MonoBehaviour
             // Moving Right
             rb2d.AddForce(Vector2.right * HorizontalForce * Time.deltaTime);
             sr.flipX = false;
+            if(!isJumping)Anim.SetInteger("AnimState", 1);
         }
 
         else if (joystick.Horizontal < -JoystickHorizontalSensitivity)
@@ -53,6 +54,13 @@ public class PlayerSunny : MonoBehaviour
             // Moving Left
             rb2d.AddForce(Vector2.left * HorizontalForce * Time.deltaTime);
             sr.flipX = true;
+            if(!isJumping)Anim.SetInteger("AnimState", 1);
+        }
+
+        else if (!isJumping)
+        {
+            Anim.SetInteger("AnimState", 0);
+   
         }
 
         if (joystick.Vertical > JoystickVerticalSensitivity && isGrounded)
@@ -60,6 +68,7 @@ public class PlayerSunny : MonoBehaviour
             // Jump
             rb2d.AddForce(Vector2.up * VerticalForce * Time.deltaTime);
             isJumping = true;
+            Anim.SetInteger("AnimState" , 2);
         }
     }
 
