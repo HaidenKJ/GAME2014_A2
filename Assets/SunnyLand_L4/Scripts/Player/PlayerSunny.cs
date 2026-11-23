@@ -84,4 +84,14 @@ public class PlayerSunny : MonoBehaviour
         isGrounded = false;
 
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("DeathZone") && SpawnPoint != null)
+        {
+           rb2d.linearVelocity = Vector2.zero;
+           transform.position = SpawnPoint.position;   
+           Debug.Log("Player touched DeathZone");
+        }
+    }
 }
